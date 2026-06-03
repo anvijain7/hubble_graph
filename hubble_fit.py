@@ -1,6 +1,6 @@
 import os
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 from scipy.optimize import curve_fit
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -40,7 +40,7 @@ def main():
     print(f"Fitted local Hubble constant: H0 = {H0_fit:.2f} +/- {H0_err:.2f} km/s/Mpc")
 
     # Plot data with error bars and fitted line
-    z_plot = np.linspace(0, 0.1, 200)
+    z_plot = np.linspace(0.01, 0.1, 200)
     mu_model = model(z_plot, H0_fit)
 
     plt.errorbar(z_fit, mu_fit, yerr=mu_err_fit, fmt="o", markersize=4, alpha=0.7, label="Data (z <= 0.1)")
