@@ -45,7 +45,7 @@ def main():
     mu_model = model(z_plot, H0_fit)
 
     plt.errorbar(z_fit, mu_fit, yerr=mu_err_fit, fmt="o", markersize=4, alpha=0.7, label="Data (z <= 0.1)")
-    plt.plot(z_plot, mu_model, color="red", lw=2, label=f"Fit: H0={H0_fit:.2f} km s^-1 Mpc^-1")
+    plt.plot(z_plot, mu_model, color="red", lw=2, label=rf"Fit: H0={H0_fit:.2f} km s$^{{-1}}$ Mpc$^{{-1}}$")
     plt.xlabel("Redshift z")
     plt.ylabel("Distance Modulus $\mu$")
     plt.legend()
