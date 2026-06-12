@@ -2,6 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt 
 from scipy.optimize import curve_fit
+from scipy.stats import norm
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH = os.path.join(SCRIPT_DIR, "Pantheon+SH0ES.dat")
@@ -44,13 +45,28 @@ def main():
     mu_model = model(z_plot, H0_fit)
 
     plt.errorbar(z_fit, mu_fit, yerr=mu_err_fit, fmt="o", markersize=4, alpha=0.7, label="Data (z <= 0.1)")
-    plt.plot(z_plot, mu_model, color="red", lw=2, label=f"Fit: H0={H0_fit:.1f} km/s/Mpc")
+    plt.plot(z_plot, mu_model, color="red", lw=2, label=f"Fit: H0={H0_fit:.2f} km/s/Mpc")
     plt.xlabel("Redshift z")
     plt.ylabel("Distance Modulus $\mu$")
     plt.legend()
     plt.grid(True, linestyle="--", alpha=0.4)
     plt.tight_layout()
     plt.savefig("local_H0_fit.png", dpi=200)
+    plt.show()
+
+    # Residuals histogram
+    residuals = (mu_fit - model(z_fit, H0_fit)) / mu_err_fit
+    plt.figure()
+    plt.hist(residuals, bins=30, density=True, alpha=0.6, color='C0', edgecolor='black')
+    x = np.linspace(-5, 5, 400)
+    plt.plot(x, norm.pdf(x, 0, 1), 'r-', lw=2, label='Standard Normal')
+    plt.xlabel('Normalised Residuals (σ)')
+    plt.ylabel('Density')
+    plt.title('Residuals Distribution')
+    plt.legend()
+    plt.grid(True, linestyle='--', alpha=0.4)
+    plt.tight_layout()
+    plt.savefig('residuals_histogram.png', dpi=200)
     plt.show()
 
 
